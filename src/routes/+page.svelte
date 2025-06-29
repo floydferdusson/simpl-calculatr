@@ -1,17 +1,29 @@
 <script lang="ts">
   import CalculatorButton from "$lib/components/CalculatorButton.svelte";
-  import { OPERATORS } from "$lib/constants/calculator";
+  import { OPERATORS, type CalculatorInput } from "$lib/constants/calculator";
   import BackspaceOutline from "virtual:icons/mdi/backspace-outline";
 
   let previousValue: string = "";
   let currentValue: string = "0";
   let operation: string | null = null;
+  let overwrite: boolean = true;
+  let lastRight: string | null = null;
 
   const handleClearAll = (): void => {};
   const handlePercentage = (): void => {};
   const handleDelete = (): void => {};
   const handleOperation = (): void => {};
-  const handleNumberInput = (): void => {};
+  
+  const handleNumberInput = (num: CalculatorInput): void => {
+    if (currentValue === "0" || overwrite) {
+      currentValue = num.toString();
+      overwrite = false;
+    } else {
+      currentValue += num;
+    }
+    lastRight = null;
+  };
+
   const handlePlusMinus = (): void => {};
   const handleDecimal = (): void => {};
   const handleEquals = (): void => {};
