@@ -9,9 +9,14 @@
   let overwrite: boolean = true;
   let lastRight: string | null = null;
 
-  const handleClearAll = (): void => {};
+  const handleClearAll = (): void => {
+    currentValue = "0";
+    operation = null;
+    previousValue = "";
+    overwrite = true;
+  };
+  
   const handlePercentage = (): void => {};
-  const handleDelete = (): void => {};
 
   const handleOperation = (op: CalculatorInput): void => {
     if (operation && !overwrite) {
@@ -21,7 +26,17 @@
     previousValue = currentValue;
     overwrite = true;
   };
-  
+
+  const handleDelete = (): void => {
+    const { length: len } = currentValue;
+    if (len === 1 || (len === 2 && currentValue.startsWith("-")) ) {  
+      currentValue = "0";
+      overwrite = true;
+    } else {
+      currentValue = currentValue.slice(0, -1);
+    }
+  };
+
   const handleNumberInput = (num: CalculatorInput): void => {
     if (currentValue === "0" || overwrite) {
       currentValue = num.toString();
