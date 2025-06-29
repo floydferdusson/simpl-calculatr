@@ -1,9 +1,21 @@
 <script lang="ts">
+  import CalculatorButton from "$lib/components/CalculatorButton.svelte";
+  import { OPERATORS } from "$lib/constants/calculator";
   import BackspaceOutline from "virtual:icons/mdi/backspace-outline";
 
   let previousValue: string = "";
   let currentValue: string = "0";
   let operation: string | null = null;
+
+  const handleClearAll = (): void => {};
+  const handlePercentage = (): void => {};
+  const handleDelete = (): void => {};
+  const handleOperation = (): void => {};
+  const handleNumberInput = (): void => {};
+  const handlePlusMinus = (): void => {};
+  const handleDecimal = (): void => {};
+  const handleEquals = (): void => {};
+  
 </script> 
 
 <div class="flex flex-col gap-2 rounded-md shadow-sm bg-base-100 w-[380px] h-fit p-4">
@@ -17,27 +29,31 @@
   </div>
 
   <div class="grid grid-cols-4 gap-2">
-    <button class="btn btn-xl">C</button>
-    <button class="btn btn-xl">&percnt;</button>
-    <button class="btn btn-xl">
+    <CalculatorButton onClick={handleClearAll} value={OPERATORS.CLEAR_ALL} />
+    <CalculatorButton onClick={handlePercentage} value={OPERATORS.PERCENTAGE} />
+    <CalculatorButton onClick={handleDelete} value={OPERATORS.BACKSPACE}>
       <BackspaceOutline />
-    </button>
-    <button class="btn btn-xl">&divide;</button>
-    <button class="btn btn-xl">7</button>
-    <button class="btn btn-xl">8</button>
-    <button class="btn btn-xl">9</button>
-    <button class="btn btn-xl">&times;</button>
-    <button class="btn btn-xl">4</button>
-    <button class="btn btn-xl">5</button>
-    <button class="btn btn-xl">6</button>
-    <button class="btn btn-xl">&minus;</button>
-    <button class="btn btn-xl">1</button>
-    <button class="btn btn-xl">2</button>
-    <button class="btn btn-xl">3</button>
-    <button class="btn btn-xl">&plus;</button>
-    <button class="btn btn-xl">&pm;</button>
-    <button class="btn btn-xl">0</button>
-    <button class="btn btn-xl">.</button>
-    <button class="btn btn-xl btn-primary">&equals;</button>
+    </CalculatorButton>
+    <CalculatorButton onClick={handleOperation} value={OPERATORS.DIVIDE} />
+    <CalculatorButton onClick={handleNumberInput} value={7} />
+    <CalculatorButton onClick={handleNumberInput} value={8} />
+    <CalculatorButton onClick={handleNumberInput} value={9} />
+    <CalculatorButton onClick={handleOperation} value={OPERATORS.MULTIPLY} />
+    <CalculatorButton onClick={handleNumberInput} value={4} />
+    <CalculatorButton onClick={handleNumberInput} value={5} />
+    <CalculatorButton onClick={handleNumberInput} value={6} />
+    <CalculatorButton onClick={handleOperation} value={OPERATORS.SUBTRACT} />
+    <CalculatorButton onClick={handleNumberInput} value={1} />
+    <CalculatorButton onClick={handleNumberInput} value={2} />
+    <CalculatorButton onClick={handleNumberInput} value={3} />
+    <CalculatorButton onClick={handleOperation} value={OPERATORS.ADD} />
+    <CalculatorButton onClick={handlePlusMinus} value={OPERATORS.TOGGLE_SIGN} />
+    <CalculatorButton onClick={handleNumberInput} value={0} />
+    <CalculatorButton onClick={handleDecimal} value={OPERATORS.DECIMAL} />
+    <CalculatorButton 
+      className="btn-primary"
+      onClick={handleEquals} 
+      value={OPERATORS.EQUALS} 
+    />
   </div>
 </div>
