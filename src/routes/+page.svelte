@@ -16,7 +16,11 @@
     overwrite = true;
   };
   
-  const handlePercentage = (): void => {};
+  const handlePercentage = (): void => {
+    const left = parseFloat(previousValue || "0") / 100;
+    currentValue = (left * parseFloat(currentValue)).toString();
+    overwrite = true;
+  };
 
   const handleOperation = (op: CalculatorInput): void => {
     if (operation && !overwrite) {
@@ -47,8 +51,22 @@
     lastRight = null;
   };
 
-  const handlePlusMinus = (): void => {};
-  const handleDecimal = (): void => {};
+  const handlePlusMinus = (): void => {
+    currentValue = currentValue.startsWith("-")
+      ? currentValue.slice(1)
+      : "-" + currentValue;
+  };
+  
+  const handleDecimal = (): void => {
+    if (overwrite) {
+      currentValue = "0.";
+      overwrite = false;
+      return;
+    }
+    if (!currentValue.includes(".")) {
+      currentValue += ".";
+    }
+  };
 
   const handleEquals = (): void => {
     if (!operation || !previousValue) return;
