@@ -5,14 +5,22 @@
 
   let previousValue: string = "";
   let currentValue: string = "0";
-  let operation: string | null = null;
+  let operation: CalculatorInput | null = null;
   let overwrite: boolean = true;
   let lastRight: string | null = null;
 
   const handleClearAll = (): void => {};
   const handlePercentage = (): void => {};
   const handleDelete = (): void => {};
-  const handleOperation = (): void => {};
+
+  const handleOperation = (op: CalculatorInput): void => {
+    if (operation && !overwrite) {
+      calculate();
+    }
+    operation = op;
+    previousValue = currentValue;
+    overwrite = true;
+  };
   
   const handleNumberInput = (num: CalculatorInput): void => {
     if (currentValue === "0" || overwrite) {
@@ -26,8 +34,42 @@
 
   const handlePlusMinus = (): void => {};
   const handleDecimal = (): void => {};
-  const handleEquals = (): void => {};
+
+  const handleEquals = (): void => {
+    if (!operation || !previousValue) return;
+    if (!lastRight) {
+      lastRight = currentValue;
+    }
+    calculate();
+    previousValue = currentValue;
+  };
   
+  const calculate = (): void => {
+    if (!operation) return;
+    const left = parseFloat(previousValue);
+    const right = parseFloat(lastRight || currentValue);
+    let result: number = 0;
+    switch (operation) {
+      case OPERATORS.ADD: 
+        result = left + right;
+        break;
+      case OPERATORS.SUBTRACT: 
+        result = left - right;
+        break;
+      case OPERATORS.MULTIPLY: 
+        result = left * right;
+        break;
+      case OPERATORS.DIVIDE: 
+        result = right !== 0 
+          ? left / right
+          : Infinity
+        break;
+    }
+    currentValue = Number.isFinite(result) 
+      ? `${result}` 
+      : "Error"; 
+    overwrite = true;
+  };
 </script> 
 
 <div class="flex flex-col gap-2 rounded-md shadow-sm bg-base-100 w-[380px] h-fit p-4">
